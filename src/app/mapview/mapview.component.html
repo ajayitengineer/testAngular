@@ -1,0 +1,23 @@
+<div class="mapdiv" *ngIf="isData">
+<agm-map [latitude]=mapData[0].latitiude [longitude]=mapData[0].longitiude>
+    <!-- <agm-direction [origin]="origin" [destination]="destination">
+    </agm-direction> -->
+    <!-- <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true"
+      (dragEnd)="markerDragEnd($event)"></agm-marker> -->
+      <agm-polyline>
+        <div *ngFor="let item of mapData let i=index" >
+                   <agm-polyline-point [latitude]=item.latitiude [longitude]=item.longitiude>
+                      <agm-marker [latitude]=item.latitiude [longitude]=item.longitiude [markerDraggable]="true"
+                     >
+                     <agm-info-window [disableAutoPan]="true">
+                        This is the <strong>{{i}} positon</strong>
+                      </agm-info-window>
+                    </agm-marker>
+
+                    </agm-polyline-point>
+        </div>
+                </agm-polyline>
+
+  </agm-map>
+  <h6>Total number of visited place:{{total}}</h6>
+</div>
