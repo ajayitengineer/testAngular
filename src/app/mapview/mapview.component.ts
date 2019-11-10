@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { MapviewService } from '../mapview.service';
 import { VehicleDataApi } from '../models/vehicle';
 import { Observable } from 'rxjs';
@@ -13,18 +13,7 @@ import { interval } from 'rxjs';
 export class MapviewComponent implements OnInit{
 
   constructor(private route: ActivatedRoute,private service: MapviewService) { }
-  public lat = 24.799448;
-public lng = 120.979021;
-public latA = 27.560932;
-public lngA = 76.625015;
-public latB = 26.922070;
-public lngB = 75.778885;
-public latC = 28.027138;
-public lngC = 73.302155;
-public latD = 28.292290;
-public lngD = 74.966583;
-public latE = 28.457523;
-public lngE = 77.026344;
+
 
 mapData: {
   id: number,
@@ -35,14 +24,17 @@ mapData: {
   vehicle_id: number,
 }[];
 total:number;
-
+id:number;
 isData = false;
-url = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
   ngOnInit() {
-    let id:number = this.route.snapshot.params['id'];
-    this.fetchData(id);
+    this.id = this.route.snapshot.params['id'];
+
+    this.route.params.subscribe((params: Params) => {
+          this.id = params['id'];
+    });
+    this.fetchData(this.id);
     setInterval(() => {
-      this.service.show(id) .subscribe(
+      this.service.show(this.id) .subscribe(
         (data: VehicleDataApi) => {
           console.log(data);
           this.isData = true;
